@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ bot_name }} - Character Chat Bot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        header {
+            background-color: #3a86ff;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .characters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .character-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+        .character-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3rem;
+        }
+        .character-info {
+            padding: 1.5rem;
+        }
+        .character-info h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #1d3557;
+        }
+        .character-info p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #3a86ff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        footer {
+            background-color: #1d3557;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        .telegram-badge {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .telegram-badge a {
+            display: inline-flex;
+            align-items: center;
+            background-color: #0088cc;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .telegram-badge a:hover {
+            background-color: #0070a8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ bot_name }}</h1>
+        <p>Chat with AI-powered fictional characters</p>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Chat with your favorite characters!</h2>
+            <p>
+                Have lifelike conversations with AI characters that talk, think, and feel like real people from your favorite stories.
+                Each character has their own unique personality, knowledge, and emotions.
+            </p>
+            
+            <div class="telegram-badge">
+                <a href="https://t.me/{{ bot_username|default('your_bot_username') }}" target="_blank">
+                    <span>Chat on Telegram</span>
+                </a>
+            </div>
+        </div>
+
+        <h2>Featured Characters</h2>
+        <div class="characters">
+            {% for char_id, character in preset_characters.items() %}
+            <div class="character-card">
+                <div class="character-img">
+                    {{ character.name[0] }}
+                </div>
+                <div class="character-info">
+                    <h3>{{ character.name }}</h3>
+                    <p>{{ character.description|truncate(100) }}</p>
+                    <a href="/character/{{ char_id }}" class="btn">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Character Chat Bot. All rights reserved.</p>
+    </footer>
+</body>
+</html>

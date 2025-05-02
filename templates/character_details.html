@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ character.name }} - Character Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        header {
+            background-color: #3a86ff;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .character-profile {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background-color: #e6f0ff;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #3a86ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-right: 2rem;
+        }
+        .profile-title h1 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #1d3557;
+        }
+        .profile-title p {
+            margin: 0;
+            color: #666;
+            font-style: italic;
+        }
+        .profile-content {
+            padding: 2rem;
+        }
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+        .profile-section h2 {
+            color: #1d3557;
+            border-bottom: 2px solid #e6f0ff;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .trait {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        .trait h4 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #1d3557;
+        }
+        .trait-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .trait-bar-fill {
+            height: 100%;
+            background-color: #3a86ff;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #3a86ff;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #3a86ff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .telegram-badge {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .telegram-badge a {
+            display: inline-flex;
+            align-items: center;
+            background-color: #0088cc;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .telegram-badge a:hover {
+            background-color: #0070a8;
+        }
+        footer {
+            background-color: #1d3557;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Character Profile</h1>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-link">← Back to Home</a>
+        
+        <div class="character-profile">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    {{ character.name[0] }}
+                </div>
+                <div class="profile-title">
+                    <h1>{{ character.name }}</h1>
+                    <p>{{ character.description[:50] }}...</p>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-section">
+                    <h2>About</h2>
+                    <p>{{ character.description }}</p>
+                </div>
+                
+                {% if character.traits %}
+                <div class="profile-section">
+                    <h2>Personality Traits</h2>
+                    <div class="traits">
+                        {% for trait_name, trait_value in character.traits.items() %}
+                        <div class="trait">
+                            <h4>{{ trait_name|title }}</h4>
+                            <div class="trait-bar">
+                                <div class="trait-bar-fill" style="width: {{ trait_value * 10 }}%;"></div>
+                            </div>
+                            <small>{{ trait_value }}/10</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="telegram-badge">
+                    <a href="https://t.me/your_bot_username?start={{ character_id }}" target="_blank">
+                        Chat with {{ character.name }} on Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Character Chat Bot. All rights reserved.</p>
+    </footer>
+</body>
+</html>
